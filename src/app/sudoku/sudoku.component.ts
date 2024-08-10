@@ -1,10 +1,10 @@
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-
+import { RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
 @Component({
   selector: 'app-sudoku',
   standalone: true,
-  imports: [FormsModule],
+  imports: [FormsModule, RouterOutlet, RouterLink, RouterLinkActive],
   templateUrl: './sudoku.component.html',
   styleUrl: './sudoku.component.scss'
 })
@@ -27,8 +27,17 @@ export class SudokuComponent {
   }
   submitSudoku() {
     console.log(this.sudokuData);
-    console.log(this.completeBoard());
-    console.log(this.isValidSudoku());
+    const isValid = this.isValidSudoku();
+    console.log(isValid);
+
+    const resultElement = document.getElementById('result');
+    if (resultElement) {
+      if (isValid) {
+        resultElement.textContent = 'Correct';
+      } else {
+        resultElement.textContent = 'Incorrect';
+      }
+    }
   }
 
   completeBoard(): boolean {
